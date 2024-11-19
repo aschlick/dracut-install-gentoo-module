@@ -1,18 +1,22 @@
 #!/bin/bash
 
 check() {
-  require_binaries wget || return 1
-  require_binaries tar || return 1
-  require_binaries sfdisk || return 1
-  require_binaries lsblk || return 1
-  require_binaries cut || return 1
-  require_binaries grep || return 1
-  require_binaries mkfs.xfs || return 1
+  require_binaries \
+    wget \
+    tar \
+    sfdisk \
+    lsblk \
+    cut \
+    grep \
+    mkfs.xfs \
+    bzip2 \
+    partprobe \
+    || return 1
   return 0
 }
 
 depends() {
-  echo bash network
+  echo bash
   return 0
 }
 
@@ -23,6 +27,10 @@ install() {
   inst /usr/bin/lsblk
   inst /usr/bin/cut
   inst /usr/bin/mkfs.xfs
+  inst /usr/bin/bzip2
+  inst /usr/bin/passwd
+  inst /usr/bin/partprobe
+  inst /var/tmp/catalyst/builds/default/stage4-amd64-systemd-local-v1.tar.bz2
 
-  inst_hook pre-trigger 91 "$moddir/install-gentoo.sh"
+  inst_hook pre-udev 91 "$moddir/install-gentoo.sh"
 }
