@@ -46,8 +46,9 @@ setup_everything() {
   if [ -b /dev/sda ]; then
     make_root_if_not_exists
     copy_stage_4_if_no_portage
+  else
+    mount /dev/nvme0n1p1 /sysroot
   fi;
 }
 
 setup_everything
-exit 192
